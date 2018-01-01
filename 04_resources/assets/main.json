@@ -1,0 +1,8 @@
+{
+  "shaders" : {
+    "stamp" : "shaders/stamp.json"
+  },
+  "images" : {
+    "bird" : "textures/bird.png"
+  }
+}

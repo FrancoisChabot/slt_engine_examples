@@ -1,0 +1,4 @@
+{
+  "vertex": "./stamp.vert",
+  "fragment": "./stamp.frag"
+}
