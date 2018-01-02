@@ -41,8 +41,12 @@ public:
 
     slt::render::clearFrame(slt::white);
     
+    // Most of the drawing context is handled through RAII objects.
+    // So the program and texture assignment here are valid for
+    // all draw operations until they run out of scope.
     slt::render::ProgramUsage use_prg(program_);
     slt::render::TextureUsage use_txt(texture_, 0);
+
     slt::render::draw(model_);
   }
 
@@ -63,9 +67,12 @@ int main(int argc, const char* argv[]) {
   slt::Runtime slt_runtime;
 
   // Enable our "main" registry.
-  slt::addRegistry("main", slt::RegistryLoadMode::ON_DEMAND);
+  auto assets = slt::addRegistry("main", slt::RegistryLoadMode::ON_DEMAND);
+
+  // Create our app instace.
   MyApp app;
-  // Loop until the ser closes the window
+
+  // Loop until the user closes the window
   while(slt_runtime.keepRunning()) {
     // This will flush the main event queue, gather inputs, and generally talk
     // with the OS.

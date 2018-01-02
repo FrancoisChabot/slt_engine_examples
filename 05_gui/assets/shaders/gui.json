@@ -1,0 +1,4 @@
+{
+  "vertex": "./gui.vert",
+  "fragment": "./gui.frag"
+}

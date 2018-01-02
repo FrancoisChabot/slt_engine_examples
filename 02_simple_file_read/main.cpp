@@ -9,6 +9,17 @@ slt::Setting<std::string> file_to_read(
     "The file to load",                               // description
     [](std::string const& v) { return v.length() > 0; }); // validator
 
+// Realistically, most of your interactions with the file system will be done
+// using the resources system, and not the low-level file system.
+//
+// However, this can still come in handy when writing custom build tools
+// or more complex file interactions like streaming. This also serves
+// as a nice introduction to the event mechanisms.
+//
+//  ...
+//
+// Alright, I confess, this example was written before the resource system
+// was a thing, and odds are it's of little real-world value to you.
 int main(int argc, const char* argv[]) {
   slt::Core slt_core(argc, argv);
 

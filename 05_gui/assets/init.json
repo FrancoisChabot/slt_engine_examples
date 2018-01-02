@@ -1,0 +1,8 @@
+{
+  "shaders" : {
+    "gui" : "shaders/gui.json"
+  },
+  "fonts" : {
+    "roboto" : "../../common_assets/fonts/Roboto-Medium.ttf"
+  }
+}

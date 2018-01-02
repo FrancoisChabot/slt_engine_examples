@@ -4,7 +4,7 @@
 
 // Create a setting
 // Settings are configurable through code, command line, config file and can
-// be used to populate guis easily,
+// be used to populate guis easily.
 slt::Setting<std::string> message(
     "Hello World",                                        // default value
     "message",                                            // name
@@ -17,7 +17,7 @@ int main(int argc, const char* argv[]) {
   slt::settings::log_async.set(false);
 
   //2: Initialize the engine core
-  // argc and argv will be used to override engine settings
+  // argc and argv will be used to override engine and user settings
   slt::Core slt_core(argc, argv);
 
   //3: Use the logging system
