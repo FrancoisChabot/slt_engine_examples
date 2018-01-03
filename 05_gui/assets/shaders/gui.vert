@@ -7,7 +7,7 @@ in vec4 slt_color;
 out vec2 out_uv;
 out vec4 out_color;
 
-layout (std140) uniform GuiRendering {
+layout (std140) uniform ViewportUBO {
   vec2 viewport_size;
 };
 

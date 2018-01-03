@@ -3,25 +3,19 @@
 #include "slt_runtime/render.h"
 #include "slt_runtime/runtime.h"
 #include "slt_runtime/resources.h"
+#include "slt_runtime/audio/sound.h"
+#include "slt_runtime/audio/emmiter.h"
 #include "slt_runtime/gui/widgets/text.h"
 #include "slt_runtime/gui/viewport.h"
 #include "slt_runtime/gui/renderer/raw_renderer.h"
 
-auto preloadAssets() {
-  // Generally, you will want to have a basic UI ready to go
-  // by the time you draw the first frame. We can do this by loading
-  // a resource registry in preload mode, and synchronously wait
-  // for it to be loaded.
-
-  // Ideally, this should be your only ever synchronous load.
-  // (because after that, you should have the assets needed to draw
-  // a loading screen).
+// For lazyness: force preload the sounds asset
+auto  preloadAssets() {
   auto assets = slt::addRegistry("init", slt::RegistryLoadMode::PRELOAD);
 
   slt::Runtime::instance->getMainQueue().executeUntil([assets]() {
     return !assets->hasPendingLoads();
   });
-
   return assets;
 }
 
@@ -35,12 +29,11 @@ int main(int argc, const char* argv[]) {
   slt::Runtime slt_runtime;
 
   auto assets = preloadAssets();
-  slt::gui::Text::default_font = assets->getPreloaded<slt::gui::FontData>("roboto")->getScaled(64);
 
-  slt::gui::RawRenderer gui_renderer(assets->getPreloaded<slt::render::Program>("gui"));
+  auto sound = assets->getPreloaded<slt::audio::Sound>("bwap");
+  slt::audio::Emmiter emmiter;
 
-  slt::gui::Viewport vp({ 1280, 720 });
-  vp.setRoot(std::make_unique<slt::gui::Text>("Hello World"));
+  emmiter.play(sound);
 
   // Loop until the ser closes the window
   while(slt_runtime.keepRunning()) {
@@ -51,7 +44,6 @@ int main(int argc, const char* argv[]) {
 
     slt::render::FrameScope frame_scope;
     slt::render::clearFrame(slt::white);
-    vp.render(gui_renderer);
   }
   return 0;
 }
